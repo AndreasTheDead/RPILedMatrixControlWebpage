@@ -10,4 +10,8 @@ router.get('/', function(req, res, next) {
     res.render('apiinformations', { title: 'API Infos' });
 });
 
+router.get('/text', function(req, res, next) {
+    res.send('Generall API Informations')
+});
+
 module.exports = router;
