@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const matrix = require('../bin/matrix')
 
 /* GET home page. */
 router.get('/info', function(req, res, next) {

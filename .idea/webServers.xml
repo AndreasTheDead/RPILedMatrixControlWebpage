@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="8a27a1a4-1a95-45a8-8b9c-1894d61fb4db" name="MatrixPI" url="http://192.168.10.249">
+        <fileTransfer rootFolder="/home/pi/matrixdev" accessType="SFTP" host="192.168.10.249" port="22" sshConfigId="5d4b4ba7-c7cc-47b9-abef-6bfd0af1770f" sshConfig="pi@192.168.10.249:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
