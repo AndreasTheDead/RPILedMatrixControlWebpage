@@ -45,14 +45,13 @@ function Clear(){
 }
 
 function ShowText(text='No Input',backgroundcolor=0x000000,forgroundcolor=0xffffff,brighness=50,font='8x13',x=0, y=0, bold=false, Cursive=false){
-    //set Background
-    console.log('set background '+backgroundcolor.toString())
+    //set Background Color
     matrix
         .brightness(brighness)
         .fgColor(backgroundcolor)
         .fill()
         .sync()
-    //set font:
+    //set Font:
     var fontwidth = font.split('x')[0]
     var fonthight = font.split('x')[1]
     if (bold === true){
@@ -64,17 +63,34 @@ function ShowText(text='No Input',backgroundcolor=0x000000,forgroundcolor=0xffff
             font = font+'O'
         }
     }
-    console.log('set font '+font.toString())
-    //Calc Size
+    //Write Text to Board, Text to long for oneline will be fitttet to multiple lines
     text = text.replace('%20',' ')
-    console.log('start point'+(matrix.height()/2-(fonthight/2)).toString())
-    if (text.length*fontwidth <= matrix.width()){
-        console.log('write text:' + text)
+    var splittext = text.split(' ')
+    if (splittext.length >= 1){
+        var charsperline = matrix.width()/fontwidth //the max char number per line
+        var outputlines = [] //an array of the lines
+        var currentoutline = '' //the current line to be added to the outputlines
+        splittext.forEach(word => {
+            if (currentoutline.length+word.length < charsperline){
+                currentoutline = currentoutline+word+' '
+            }
+            else{
+                outputlines.push(currentoutline)
+                currentoutline = ''
+                currentoutline = currentoutline+word+' '
+            }
+        })
+        outputlines.push(currentoutline)
+        var starty = Math.floor((matrix.height()/2)-(outputlines.length*fonthight/2))
         matrix
             .fgColor(forgroundcolor)
             .font(FontList[font])
-            .drawText(text,matrix.width()/2-((text.length*fontwidth)/2),matrix.height()/2-(fonthight/2))
-            .sync()
+        outputlines.forEach(line => {
+            matrix
+                .drawText(line,matrix.width()/2-((line.length*fontwidth)/2)+(fontwidth/2),starty)
+            starty = parseInt(starty)+parseInt(fonthight)
+        })
+        matrix.sync()
     }
 }
 
@@ -93,7 +109,6 @@ router.get('/', function(req, res, next) {
 router.put('/text/:text', function(req, res, next) {
     text = req.params.text
     console.log(req.query)
-    console.log(req.query.B)
     if (req.query.Font !== undefined){font = req.query.Font}else {font = '8x13'}
     if (req.query.BGC !== undefined){backgroundcolor = parseInt(req.query.BGC)}else {backgroundcolor = 0x000000}
     if (req.query.FGC !== undefined){forgroundcolor = parseInt(req.query.FGC)}else {forgroundcolor=0xffffff}
