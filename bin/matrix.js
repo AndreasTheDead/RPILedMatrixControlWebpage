@@ -21,6 +21,7 @@ const matrix = new LedMatrix(
 );
 
 //Code to load Fonts
+// in file names B Stands for Bold and O for Cursive
 var FontList = {};
 fs.readdirSync(process.cwd()+'/fonts/').forEach(file =>{
     var fontname = file.substr(0,file.length-4)
@@ -38,7 +39,8 @@ function Clear(){
         .clear()            // clear the display
 }
 
-function ShowText(backgroundcolor,forgroundcolor,brighness,text,font,x=0, y=0){
+function ShowText(text='Text',backgroundcolor=0x000000,forgroundcolor=0xffffff,brighness=50,font='8x13',x=0, y=0, bold=false, Cursive=false){
+    console.log('Set Text Function')
     matrix
         .brightness(brighness)
         .fgColor(backgroundcolor)
@@ -66,8 +68,4 @@ matrix
     .drawLine(matrix.width() - 1, 0, 0, matrix.height() - 1)*/
     .sync();
 
-ShowText(0x0000FF,0xFFFF00,20,'HALlO','8x13');
-
-sleep(50000).then(() => {
-    console.log("")// This will execute 5 seconds from now
-});
+ShowText('Started',0x0000FF,0xFFFF00,20,'8x13',0,0);
