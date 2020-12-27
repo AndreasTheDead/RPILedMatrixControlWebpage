@@ -18,6 +18,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use("/bootstrap/js",express.static(__dirname + '/node_modules/jquery/dist'));
+app.use("/bootstrap/js",express.static(__dirname + '/node_modules/bootstrap/dist/js/'));
+app.use("/bootstrap/css",express.static(__dirname + '/node_modules/bootswatch/dist/superhero'));
 
 app.use('/', indexRouter);
 app.use('/api', apiRouter);

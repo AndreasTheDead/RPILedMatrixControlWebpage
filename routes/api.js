@@ -108,7 +108,7 @@ router.get('/', function(req, res, next) {
 
 router.put('/text/:text', function(req, res, next) {
     text = req.params.text
-    console.log(req.query)
+    console.log('text: '+text +'; params: '+req.query)
     if (req.query.Font !== undefined){font = req.query.Font}else {font = '8x13'}
     if (req.query.BGC !== undefined){backgroundcolor = parseInt(req.query.BGC)}else {backgroundcolor = 0x000000}
     if (req.query.FGC !== undefined){forgroundcolor = parseInt(req.query.FGC)}else {forgroundcolor=0xffffff}
@@ -117,7 +117,8 @@ router.put('/text/:text', function(req, res, next) {
     if (req.query.Cursive !== undefined){Cursive = req.query.Cursive}else {Cursive=false}
     try{
         ShowText(text,backgroundcolor,forgroundcolor,brighness,font,0,0,false,false)
-        res.send('{"Statuscode":200,"Status":"Sucess"}')
+        res.status(200).json({"Statuscode":200,"Status":"Sucess"})
+        return;
     }
     catch{
         res.statusCode = 400
