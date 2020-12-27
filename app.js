@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const helmet = require('helmet');
+const session = require('express-session');
 
 var indexRouter = require('./routes/index');
 var apiRouter = require('./routes/api');
@@ -23,6 +24,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use("/bootstrap/js",express.static(__dirname + '/node_modules/jquery/dist'));
 app.use("/bootstrap/js",express.static(__dirname + '/node_modules/bootstrap/dist/js/'));
 app.use("/bootstrap/css",express.static(__dirname + '/node_modules/bootswatch/dist/superhero'));
+
+app.use( session({
+      secret : '4epJO7Bz7FCnbn0NXidVpAsz',
+      name : 'sessionId',
+    })
+);
+
 
 app.use('/', indexRouter);
 app.use('/api', apiRouter);
